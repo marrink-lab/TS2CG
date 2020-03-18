@@ -1,0 +1,16 @@
+;include  STxB.gro
+
+; lipidnname ratioup ratiodown  ap
+[Lipids List]
+POPC 0.50 0.0 0.63
+POPE 0.40 0.0 0.64 
+CDLN 0.10 0.0 1.04
+POPC 0.0 0.3 0.68
+POPE 0.0 0.3 0.66
+PAPI 0.0 0.1 0.73 
+CDLN 0.0 0.3 1.11
+End 
+
+
+[Protein List]
+End Protein

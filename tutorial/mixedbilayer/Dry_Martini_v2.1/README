@@ -1,0 +1,27 @@
+README FOR BETA OF DRY MARTINI v2.1
+
+If you use Dry Martini please cite:
+  C. Arnarez, J.J. Uusitalo, M.F. Masman, H.I. Ingólfsson, D.H. de Jong, M.N. Melo, X. Periole, A.H. de Vries, S.J. Marrink
+  Dry Martini, a coarse grained implicit water force field for (bio)molecular simulations
+  JCTC, 2015, 11 (1), pp 260–275, DOI: 10.1021/ct500477k
+
+This package includes itp and mdp files for running simulations without aqueous solvent with
+Martini. The files have been tested to work with Gromacs >4.5.x packages.
+
+The package contains:
+  dry_martini_v2.1.itp            The general force field and interaction parameters
+  dry_martini_v2.1_lipids.itp     Updated lipid models for Dry Martini (some bonded parameters are
+                                  changed from standard Martini)
+  dry_martini_v2.1_lipids.itp     Updated cholesterol model for Dry Martini (one bead type and
+                                  out-of-plane beads protrusion slightly modified)
+  dry_martini_v2.1_solvents.itp   Updated models for simple solvents for Dry Martini
+  dry_martini_v2.1_ions.itp       Models for Dry Martini ions
+  template_sd.mdp                 Suggested simulation parameters for Dry Martini simulations
+
+Bilayer simulations with Dry Martini should be performed with semi-isotropic pressure coupling. The
+box should be fixed along the axis parallel to the bilayer normal (compressibility set to zero).
+Bilayers are supposed to be run tensionless and therefore the pressure along axis perpendicular to
+the bilayer normal should be set to zero.
+
+This version of the force field is not optimized for protein simulations and it is not recommended
+for such simulations.

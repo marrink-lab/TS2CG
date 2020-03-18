@@ -1,0 +1,7 @@
+
+[Lipids List]
+DOPC 1 1 0.7 
+End 
+; proteinname typeid ratio phi theta z0
+[Protein List]
+End Protein

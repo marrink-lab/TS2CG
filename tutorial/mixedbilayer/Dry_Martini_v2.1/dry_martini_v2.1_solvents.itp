@@ -1,0 +1,410 @@
+;;; MARTINI v2.0
+;;; TOPOLOGIES FOR LIPIDS
+;;; 2012/12/04
+
+
+;;; BONDED PARAMETERS
+;
+; defined for all lipids
+; aliases for bonds
+#define  mb_b     0.480  1250.0 ; bond between two regular particles (MODIFIED from MARTINI v2.0 [previous: 0.470 1250.0])
+#define  mb_sb    0.300  5000.0 ; shorter bond between two ring particles
+; aliases for angles
+#define  ma_ccc 180.000    35.0 ; simple bond in linear molecule (MODIFIED from MARTINI v2.0 [previous: 180.0 25.0])
+#define  ma_cdc 120.000    45.0 ; double bond in linear molecule
+#define  ma_dcc 180.000    45.0 ; double bond located at the beginning of a linear molecule
+
+
+;;; ALKANES
+;;; propane, butane/isopropane, cyclohexane, benzene, octane, decane/dodecane, hexadecane, octadecane, cis-/trans-octadecene
+
+; PROPANE
+
+[ moleculetype ]
+; molname  nrexcl
+  AN3      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C2   1     AN3     C    1    0.0
+
+; BUTANE / ISOPROPANE
+
+[ moleculetype ]
+; molname  nrexcl
+  AN4      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C1   1     AN4     C    1    0.0
+
+; CYCLOHEXANE
+
+[ moleculetype ]
+; molname  nrexcl
+  CYAN     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 SC1  1     CYAN    C    1    0.0
+  2 SC1  1     CYAN    C    2    0.0
+  3 SC1  1     CYAN    C    3    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_sb
+  2  3  1      mb_sb
+  1  3  1      mb_sb
+
+; BENZENE
+;
+; The benzene topology has been adapted following:
+;
+;  D.H. de Jong, G. Singh, W.F.D. Bennet, C. Arnarez, T.A. Wassenaar, L.V. Schafer, X. Periole, D.P. Tieleman, S.J. Marrink.
+;  Improved Parameters for the Martini Coarse-Grained Protein Force Field.
+;  JCTC, 9:687–697, 2013.
+;
+; The bead type changed from SC4 to SC5. This improves the butane-water partitioning but does not affect the properties of pure benzene.
+
+[ moleculetype ]
+; molname  nrexcl
+  CYEN     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 SC5  1     CYEN    C    1    0.0
+  2 SC5  1     CYEN    C    2    0.0
+  3 SC5  1     CYEN    C    3    0.0
+
+[ constraints ]
+; i  j  funct  length
+  1  2  1      0.27
+  2  3  1      0.27
+  1  3  1      0.27
+
+; OCTANE
+
+[ moleculetype ]
+; molname  nrexcl
+  AN8      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C1   1     AN8     C    1    0.0
+  2 C1   1     AN8     C    2    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1       mb_b
+
+; DECANE / DODECANE
+
+[ moleculetype ]
+; molname  nrexcl
+  AN12     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+ 1  C1   1     AN12    C    1    0.0
+ 2  C1   1     AN12    C    2    0.0
+ 3  C1   1     AN12    C    3    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+  2  3  1      mb_b
+
+[ angles ]
+; i  j  k  funct  alias
+  1  2  3  2      ma_ccc
+
+; HEXADECANE
+
+[ moleculetype ]
+; molname  nrexcl
+  AN16     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C1   1     AN16    C    1    0.0
+  2 C1   1     AN16    C    2    0.0
+  3 C1   1     AN16    C    3    0.0
+  4 C1   1     AN16    C    4    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+  2  3  1      mb_b
+  3  4  1      mb_b
+
+[ angles ]
+; i  j  k  funct  alias
+  1  2  3  2      ma_ccc
+  2  3  4  2      ma_ccc
+
+; OCTADECANE
+
+[ moleculetype ]
+; molname  nrexcl
+  AN18     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C1   1     AN18    C    1    0.0
+  2 C1   1     AN18    C    2    0.0
+  3 C1   1     AN18    C    3    0.0
+  4 C1   1     AN18    C    4    0.0
+  5 C1   1     AN18    C    5    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+  2  3  1      mb_b
+  3  4  1      mb_b
+  4  5  1      mb_b
+
+[ angles ]
+; i  j  k  funct  alias
+  1  2  3  2      ma_ccc
+  2  3  4  2      ma_ccc
+  3  4  5  2      ma_ccc
+
+; cis-OCTADECENE
+; cis double bond around position 9
+
+[ moleculetype ]
+; molname  nrexcl
+  cAN18    1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C1   1     cAN18   C    1    0.0
+  2 C1   1     cAN18   C    2    0.0
+  3 C3   1     cAN18   D    3    0.0
+  4 C1   1     cAN18   C    4    0.0
+  5 C1   1     cAN18   C    5    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+  2  3  1      mb_b
+  3  4  1      mb_b
+  4  5  1      mb_b
+
+[ angles ]
+; i  j  k  funct  alias
+  1  2  3  2      ma_ccc
+  2  3  4  2      ma_cdc
+  3  4  5  2      ma_ccc
+
+; trans-OCTADECENE
+; trans double bond around position 6
+
+[ moleculetype ]
+; molname  nrexcl
+  tAN18    1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C1   1     tAN18   C    1    0.0
+  2 C3   1     tAN18   D    2    0.0
+  3 C1   1     tAN18   C    3    0.0
+  4 C1   1     tAN18   C    4    0.0
+  5 C1   1     tAN18   C    5    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+  2  3  1      mb_b
+  3  4  1      mb_b
+  4  5  1      mb_b
+
+[ angles ]
+; i  j  k  funct  alias
+  1  2  3  2      ma_dcc
+  2  3  4  2      ma_ccc
+  3  4  5  2      ma_ccc
+
+
+;;; ALCOHOLS
+;;; ethanol, propanol, butanol, octanol, dodecanol, hexadecanol
+
+; ETHANOL
+
+[ moleculetype ]
+; molname  nrexcl
+  OL2      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 P2   1     OL2     COH  1    0.0
+
+; PROPANOL
+
+[ moleculetype ]
+; molname  nrexcl
+  OL3      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 P1   1     OL3     COH  1    0.0
+
+; BUTANOL
+
+[ moleculetype ]
+; molname  nrexcl
+  OL4      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 Nda  1     OL4     COH  1    0.0
+
+; OCTANOL
+
+[ moleculetype ]
+; molname  nrexcl
+  OL8      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 P1   1     OL8     COH  1    0.0
+  2 C1   1     OL8     C    2    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+
+; DODECANOL
+; 1-dodecanol, lauryl alcohol, HOC(x12)
+; added by Helgi, based on DODECANE and OCTANOL
+
+[ moleculetype ]
+; molname  nrexcl
+  OL12     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 P1   1     OL12    COH  1    0.0
+  2 C1   1     OL12    C    2    0.0
+  3 C1   1     OL12    C    3    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+  2  3  1      mb_b
+
+[ angles ]
+; i  j  k  funct  alias
+  1  2  3  2      ma_ccc
+
+; HEXADECANOL
+; 1-hexadecanol, HOC(x16)
+; added by Helgi, based on HEXADECANE and OCTANOL
+
+[ moleculetype ]
+; molname  nrexcl
+  OL16     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 P1   1     OL16    COH  1    0.0
+  2 C1   1     OL16    C    2    0.0
+  3 C1   1     OL16    C    3    0.0
+  4 C1   1     OL16    C    4    0.0
+
+[ bonds ]
+; i  j  funct  alias
+  1  2  1      mb_b
+  2  3  1      mb_b
+  3  4  1      mb_b
+
+[ angles ]
+; i  j  k  funct  alias
+  1  2  3  2      ma_ccc
+  2  3  4  2      ma_ccc
+
+
+;;; OTHER ORGANIC SOLVENTS
+;;; chloropropane, chloroform, methylethylsulfide, ether, aceton/propanon, propylamine, acetic acid, acetamide
+
+; CHLOROPROPANE
+
+[ moleculetype ]
+; molname  nrexcl
+  ClAN3    1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C3   1     ClAN3   C    1    0.0
+
+; CHLOROFORM
+
+[ moleculetype ]
+; molname  nrexcl
+  CCl3     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C4   1     CCl3    C    1    0.0
+
+; METHYLETHYLSULFIDE
+
+[ moleculetype ]
+; molname  nrexcl
+  CCSC     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 C5   1     CCSC    S    1    0.0
+
+; ETHER
+
+[ moleculetype ]
+; molname  nrexcl
+  ETH      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 N0   1     ETH     O    1    0
+
+; ACETONE / PROPANONE
+
+[ moleculetype ]
+; molname  nrexcl
+  ON3      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 Na   1     ON3     C    1    0.0
+
+; PROPYLAMINE
+
+[ moleculetype ]
+; molname  nrexcl
+  AMI3     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 Nd   1     AMI3    C    1    0.0
+
+; ACETIC ACID
+
+[ moleculetype ]
+; molname  nrexcl
+  COOH     1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 P3   1     COOH    COOH 1    0.0
+
+; ACETAMIDE
+
+[ moleculetype ]
+; molname  nrexcl
+  NCO      1
+
+[ atoms ]
+; i type resnr residue atom cgnr charge
+  1 P5   1     NCO     NCO  1    0.0
+
+;;; Jaakko & Clement
