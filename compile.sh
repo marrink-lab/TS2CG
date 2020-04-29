@@ -1,4 +1,8 @@
 #!/bin/bash
+
+## Univeristy of Groningen
+## Weria Pezeshkian
+
 cd src
 cd MembraneBuilder
 g++ -c -O3 *.cpp
