@@ -13,7 +13,7 @@ help::help(std::string exe)
      std::cout<<"-- CG Membrane builder:   "<<"\n";
      std::cout<<"-- Version:  "<<SoftWareVersion<<"\n";
      std::cout<<"-- Groningen Biomolecular Sciences and Biotechnology Institute and Zernike Institute for Advanced Materials,\n-- University of Groningen, Groningen, Netherlands"<<"\n";
-     std::cout<<"-- For more information contact Weria Pezeshkian: w.pezeshkian@rug.nl"<<"\n";
+     std::cout<<"-- For more information contact Weria Pezeshkian: w.pezeshkian@rug.nl and weria.pezeshkian@gmail.com"<<"\n";
      std::cout<<"=========================================================================================================="<<"\n";
      std::cout<<"-- With option -Bondlength, you can chnage the initial bond guess. Large Bondlength may generate an unstable structure ";
      std::cout<<"-- With  option  -renorm   the molar ratio of the lipid will be renormalized  "<<"\n";
