@@ -11,10 +11,11 @@
 
 /*
  
- need to be done
+ further extentions
  
  1). in random inc, we should prevent them to be close
  2.) angle and theta is not used yet
+ 3.) pattern based protein insertion
  
  
  
