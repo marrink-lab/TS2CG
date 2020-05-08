@@ -12,6 +12,7 @@ help::help(std::string version,std::string exe)
         std::cout<<"-- Version:  "<<SoftWareVersion<<"\n";
         std::cout<<"-- Groningen Biomolecular Sciences and Biotechnology Institute and Zernike Institute for Advanced Materials,\n-- University of Groningen, Groningen, Netherlands"<<"\n";
         std::cout<<"-- For more information contact Weria Pezeshkian: w.pezeshkian@rug.nl and weria.pezeshkian@gmail.com"<<"\n";
+        std::cout<<"-- citation: Pezeshkian, W., König, M., Wassenaar, T.A. et al. Backmapping triangulated surfaces to coarse-grained membrane models. Nat Commun 11, 2296 (2020)."<<"\n";
         std::cout<<"=========================================================================================================="<<"\n";
         std::cout<<"-- Pointillism, reads a triangulated surface input file e.g., typical outputs of dynamically \n-- triangulated surfaces simulations, and generates two sets of points that represent a two smooth surfaces \n-- (upper and lower monolayers of a bilayer). "<<"\n";
         std::cout<<"-- Simplest triangulated surfaces file that can be read by this script should be as: "<<"\n";
