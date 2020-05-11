@@ -29,9 +29,9 @@ ReadDTSFolder::ReadDTSFolder(std::string foldername)
         std::cout<<"--> no inclsuion file is provided, we will generate a random distribution of proteins if information is provided in STR file \n";
     }
     
-    m_OuterPoint = ReadPointObjects(file1);
+    m_OuterPoint = ReadPointObjects(file1,1);
     if(monolayer==false)
-    m_InnerPoint = ReadPointObjects(file2);
+    m_InnerPoint = ReadPointObjects(file2,-1);
     
     if(FileExist(file3) == true)
     {
@@ -66,7 +66,7 @@ ReadDTSFolder::~ReadDTSFolder()
 
 
 
-std::vector<point> ReadDTSFolder::ReadPointObjects(std::string file)
+std::vector<point> ReadDTSFolder::ReadPointObjects(std::string file, int lay)
 {
     
 
@@ -86,9 +86,11 @@ std::vector<point> ReadDTSFolder::ReadPointObjects(std::string file)
         printf(" Error: Could not open file %s",file.c_str());
     }
 
+    if(lay==1)
     int readafile =  fscanf(fdtspoins,"%s%f%f%f",str2,&Lx,&Ly,&Lz);
-    readafile = fscanf(fdtspoins,"%s%s%s%d%s",str2,str2,str2,&NoPoints,str2);
-    
+
+    int readafile = fscanf(fdtspoins,"%s%s%s%d%s",str2,str2,str2,&NoPoints,str2);
+
     m_Box(0) = Lx;
     m_Box(1) = Ly;
     m_Box(2) = Lz;
@@ -116,6 +118,8 @@ std::vector<point> ReadDTSFolder::ReadPointObjects(std::string file)
     {
         check = fscanf(fdtspoins,"%d%f%f%f%f%f%f%f%f%f%f%f%f%f%f%f",&id,&area,&x,&y,&z,&nx,&ny,&nz,&p1x,&p1y,&p1z,&p2x,&p2y,&p2z,&c1,&c2);
         
+
+
         Vec3D X(x,y,z);
         Vec3D N(nx,ny,nz);
         Vec3D P1(p1x,p1y,p1z);

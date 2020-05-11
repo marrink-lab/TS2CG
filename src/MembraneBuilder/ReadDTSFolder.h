@@ -45,7 +45,7 @@ private:
 
 private:
     bool FileExist (const std::string &name);
-    std::vector<point> ReadPointObjects(std::string file);
+    std::vector<point> ReadPointObjects(std::string file,int);
     std::vector<inclusion> ReadInclusionObjects(std::string file);
 
  //   void ReadPoint(std::string file);
