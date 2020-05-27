@@ -30,7 +30,10 @@ help::help(std::string exe)
      std::cout<<" -Bondlength       double       0.1                  initial bond guess;  "<<"\n";
      std::cout<<" -LLIB             string       no                   a CG lipid library file name;  "<<"\n";
      std::cout<<" -renorm           ------       no                   renormalized the lipid molar ratio  "<<"\n";
-     std::cout<<" -iter             double          4                    the number of point selection is iter*number of the point  "<<"\n";
+     std::cout<<" -iter             double          4                 the number of point selection is iter*number of the point  "<<"\n";
+     std::cout<<" -incdirtype       string       Global               the type of protein direction data (Local/Global)  "<<"\n";
+
+    
 
      std::cout<< "example: PCG -dts point -str input.str -seed 39234  -Bondlength 0.15 "<<"\n";
 
