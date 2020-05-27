@@ -79,6 +79,8 @@ private:
     std::vector<inclusion*>  m_pInc;
     std::vector<ExcludedVolumeBeads>  m_ExcludeBeads;
     double m_Iter;
+    std::string m_InclusionDirectionType;
+
 private:
     double dist2between2Points(Vec3D X1,Vec3D X2);
     void WriteFinalGroFile();

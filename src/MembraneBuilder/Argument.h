@@ -19,6 +19,7 @@ public:
     inline const std::string GetLipidLibrary()                   const {return m_LipidLibrary;}
 
     inline const std::string GetStructureFileName()                   const {return m_StrFileName;}
+    inline const std::string GetInclusionDirectionType()                   const {return m_InclusionDirectionType;}
 
 	inline const std::string GetGeneralOutputFilename()             	const {return m_GeneralOutputFilename;}
     inline const bool GetHealth()            const {return m_Health;}
@@ -33,6 +34,7 @@ public:
 private:
     std::vector <std::string> m_Argument;
     std::string m_DTSFolder;
+    std::string m_InclusionDirectionType;
     std::string m_StrFileName;
     std::string m_LipidLibrary;
     int m_ArgCon;

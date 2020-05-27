@@ -46,6 +46,9 @@ BackMap::BackMap(Argument *pArgu)
     m_ResID = 1;
     m_Renormalizedlipidratio = pArgu->GetRenorm();
     m_Iter = pArgu->GetIter();
+    
+    m_InclusionDirectionType = pArgu->GetInclusionDirectionType();
+    std::cout<<"The inclusion direction type is: "<<m_InclusionDirectionType<<"\n";
     //==========================================================================================================
     
     GenerateMolType  MOLTYPE(pArgu);
@@ -434,7 +437,12 @@ void BackMap::GenProtein(MolType moltype, int listid, Vec3D Pos, Vec3D Normal, V
         Tensor2 GL = LG.Transpose(LG);
         
         //===== to fit to the protein diretion
-        Vec3D LocalDir = GL*Dir;
+        Vec3D LocalDir;
+        if(m_InclusionDirectionType=="Global")
+        LocalDir = GL*Dir;
+        else if(m_InclusionDirectionType=="Local")
+        LocalDir = Dir;
+
         double C=LocalDir(0);
         double S= LocalDir(1);
         Tensor2 Rot=Rz(C,S);

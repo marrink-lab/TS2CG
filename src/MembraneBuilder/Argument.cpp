@@ -18,6 +18,7 @@ Argument::Argument(std::vector <std::string> argument)
     m_LipidLibrary          = "no";
     m_GeneralOutputFilename	 = "output";
     m_SoftWareVersion = SoftWareVersion;
+    m_InclusionDirectionType = "Global";
     m_ArgCon=1;
     std::string Arg1;
     m_Seed = 9474;
@@ -64,6 +65,15 @@ Argument::Argument(std::vector <std::string> argument)
                 i=i-1;
                 m_Renorm = true;
 
+            }
+            else if(Arg1=="-incdirtype")
+            {
+                m_InclusionDirectionType = m_Argument.at(i+1);
+                if(m_InclusionDirectionType!="Local" || m_InclusionDirectionType!="Global")
+                {
+                    std::cout<<"Error: The inclusion direction type is unknown \n";
+                }
+                
             }
             else if(Arg1=="-iter")
             {
