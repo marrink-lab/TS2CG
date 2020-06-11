@@ -87,6 +87,7 @@ BackMap::BackMap(Argument *pArgu)
 
     
 
+
     //================== read str file name
     //*****************************
     //*********************************
@@ -223,7 +224,7 @@ BackMap::BackMap(Argument *pArgu)
 //=========================================================================================================
 
 
-    CreateWallBead(m_point1, m_point2);
+  //  CreateWallBead(m_point1, m_point2);
 
 
 
@@ -375,6 +376,19 @@ BackMap::BackMap(Argument *pArgu)
      }
     
     
+    //=============== Wall info and data
+    
+    Wall CWall = pArgu->GetWall();
+    CWall.CreateWall(m_point1,m_point2);
+    std::vector<bead> WB = CWall.GetWallBead();
+    for (std::vector<bead>::iterator it = WB.begin() ; it != WB.end(); ++it)
+    {
+        m_FinalBeads.push_back((*it));
+    }
+    
+    
+    //============== End Wall info and data
+    
     WriteFinalGroFile();
     
     
@@ -398,6 +412,8 @@ BackMap::BackMap(Argument *pArgu)
     if(m_monolayer == false)
     for ( std::vector<LipidList>::iterator it = m_TotalLipidList.begin(); it != m_TotalLipidList.end(); it++ )
         Topgro<<(*it).LipidName<<"   "<<(*it).no_createddown<<"\n";
+    
+    Topgro<<"Wall    "<<WB.size()<<"\n";
 
 
 
@@ -686,7 +702,7 @@ void BackMap::CreateRandomInclusion()
     
     std::cout<<" we have generated random distribution of proteins, the number is  "<<m_RandomInc.size()<<"  \n";
 }
-void BackMap::CreateWallBead(std::vector<point*>  p1, std::vector<point*>  p2)
+/*void BackMap::CreateWallBead(std::vector<point*>  p1, std::vector<point*>  p2)
 {
     std::string file="Wall.gro";
     FILE *fgro;
@@ -733,6 +749,7 @@ void BackMap::CreateWallBead(std::vector<point*>  p1, std::vector<point*>  p2)
     fclose(fgro);
     
 }
+ */
 bool BackMap::FindLipidList(std::string filename)
 {
     bool OK=true;

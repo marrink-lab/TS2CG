@@ -19,6 +19,8 @@ help::help(std::string exe)
      std::cout<<"-- With option -Bondlength, you can chnage the initial bond guess. Large Bondlength may generate an unstable structure ";
      std::cout<<"-- With  option  -renorm   the molar ratio of the lipid will be renormalized  "<<"\n";
     std::cout<<"while small one may require a longer energy minimization  "<<"\n";
+     std::cout<<"-WallDen: Note: is a sort of Wall bead density. However, it should not be larger than 1. Larger than 1 acts as one.  "<<"\n";
+     std::cout<<"To get higher denisty, you may increase -Mashno value or reduce -ap value in PLM command.   "<<"\n";
      std::cout<<"=========================================================================================================="<<"\n";
     std::cout<<"------------ This script convert Pointillism outputs to a CG model -------------------"<<"\n";
     std::cout<<"-------------------------------------------------------------------------------"<<"\n";
@@ -30,8 +32,12 @@ help::help(std::string exe)
      std::cout<<" -Bondlength       double       0.1                  initial bond guess;  "<<"\n";
      std::cout<<" -LLIB             string       no                   a CG lipid library file name;  "<<"\n";
      std::cout<<" -renorm           ------       no                   renormalized the lipid molar ratio  "<<"\n";
-     std::cout<<" -iter             double          4                 the number of point selection is iter*number of the point  "<<"\n";
+     std::cout<<" -iter             double       4                    the number of point selection is iter*number of the point  "<<"\n";
      std::cout<<" -incdirtype       string       Global               the type of protein direction data (Local/Global)  "<<"\n";
+     std::cout<<" -Wall             ------       off                  a flag to create a wall around the membrane  "<<"\n";
+     std::cout<<" -WallDen          double       1                    Density of the wall beads  (for more info, see above)"<<"\n";
+     std::cout<<" -WallBName        string       WL                   Name of the Wall beads  "<<"\n";
+     std::cout<<" -WallH            double       0                    Distance of the wall from the lipid head groups  "<<"\n";
 
     
 

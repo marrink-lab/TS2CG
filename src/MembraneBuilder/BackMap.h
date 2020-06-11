@@ -100,7 +100,7 @@ private:
     std::vector<point*>  m_point1;
     std::vector<point*>  m_point2;
 
-    void CreateWallBead(std::vector<point*>  p1, std::vector<point*>  p2);
+   // void CreateWallBead(std::vector<point*>  p1, std::vector<point*>  p2);
     bool FindLipidList(std::string str);
     void GenProtein(MolType moltype, int , Vec3D Pos, Vec3D Normal, Vec3D Dir,Vec3D t1,Vec3D t2);
     void GenLipid(MolType moltype, int , Vec3D Pos, Vec3D Normal, Vec3D Dir,Vec3D t1,Vec3D t2);

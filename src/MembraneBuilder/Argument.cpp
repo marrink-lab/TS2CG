@@ -80,6 +80,27 @@ Argument::Argument(std::vector <std::string> argument)
                m_Iter = f.String_to_Double(m_Argument.at(i+1));
                 
             }
+            else if(Arg1=="-Wall")
+            {
+                m_Wall.UpdateState(true);
+                i=i-1;
+            }
+            else if(Arg1=="-WallDen")
+            {
+                m_Wall.UpdateDen(f.String_to_Double(m_Argument.at(i+1)));
+                if(f.String_to_Double(m_Argument.at(i+1))>1)
+                {
+                    std::cout<<" Warning: the density of the wall beads is larger than 1: this has no effect and will act as 1 \n";
+                }
+            }
+            else if(Arg1=="-WallBName")
+            {
+                m_Wall.UpdateBeadName(m_Argument.at(i+1));
+            }
+            else if(Arg1=="-WallH")
+            {
+                m_Wall.UpdateH(f.String_to_Double(m_Argument.at(i+1)));
+            }
             else if(Arg1=="-LLIB")
             {
                 m_LipidLibrary = m_Argument.at(i+1);
