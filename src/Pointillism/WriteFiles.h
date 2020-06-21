@@ -24,6 +24,7 @@ void Writevtu(std::vector<vertex* > ver, std::vector<triangle* > triangle,  std:
 void WritevtuNochange(std::vector<vertex* > ver, std::vector<triangle* > triangle,  std::vector<links* > , std::string Filename);
 void Writefullvtu(std::vector<vertex* > ver, std::vector<triangle* > triangle,  std::vector<links* > , std::string Filename);
 void WriteInclusion(std::string id, std::vector<vertex* > ver, std::ofstream *Output);
+    void    Writevtunew(std::vector< vertex* > ver, std::vector< triangle* > triangle1,  std::string Filename);
 private:
 
 

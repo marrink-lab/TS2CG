@@ -581,3 +581,160 @@ void WriteFiles::WritevtuNochange(std::vector< vertex* > ver, std::vector< trian
     
     
 }
+void WriteFiles::Writevtunew(std::vector< vertex* > ver, std::vector< triangle* > triangle1,  std::string Filename)
+{
+    
+    Vec3D m_Box=*m_pBox;
+    double L=m_Box(0);
+    if(m_Box(1)<L)
+    L=m_Box(1);
+    if(m_Box(2)<L)
+    L=m_Box(2);
+    L=L/2;
+    std::cout<<L<<" box here for vis \n";
+
+    // First make all the triangles visualizable
+    for (std::vector<triangle *>::iterator it = triangle1.begin() ; it != triangle1.end(); ++it)
+    {
+        
+        (*it)->UpdateRepresentation(true);
+        vertex * v1=(*it)->GetV1();
+        vertex * v2=(*it)->GetV2();
+        vertex * v3=(*it)->GetV3();
+        
+        Vec3D X1(v1->GetVXPos(),v1->GetVYPos(),v1->GetVZPos());
+        Vec3D X2(v2->GetVXPos(),v2->GetVYPos(),v2->GetVZPos());
+        Vec3D X3(v3->GetVXPos(),v3->GetVYPos(),v3->GetVZPos());
+        
+        bool rep=true;
+        
+        if((X1-X2).norm()>L || (X3-X2).norm()>L || (X1-X3).norm()>L)
+        {
+            
+            rep=false;
+            ((*it))->UpdateRepresentation(rep);
+
+        }
+
+    }
+
+    
+    
+    
+    
+    
+    int numv=ver.size();
+    int numtri=triangle1.size();
+    int numtrirep=0;
+    
+    for (int i=0;i<triangle1.size();i++)
+    {
+        triangle* a=triangle1.at(i);
+        if(a->GetRepresentation()==true)
+        {numtrirep++;}
+        
+    }
+    
+    
+    
+    std::ofstream Output;
+    Output.open(Filename.c_str());
+    
+    
+    
+    
+    Output<<"<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"BigEndian\">"<<"\n";
+    Output<<"  <UnstructuredGrid>"<<"\n";
+    Output<<"    <Piece NumberOfPoints=\""<<numv<<"\" NumberOfCells=\""<<numtrirep<<"\">"<<"\n";
+    Output<<"      <PointData Scalars=\"scalars\">"<<"\n";
+    
+    Output<<"        <DataArray type=\"Float32\" Name=\"inc\" Format=\"ascii\">"<<"\n";
+    
+    for (int i=0;i<numv;i++)
+    {
+        vertex* a=ver.at(i);
+        if(a->VertexOwnInclusion()==true)
+        {
+            Output<<"          "<<1<<"\n";
+        }
+        else
+        Output<<"          "<<0<<"\n";
+        
+    }
+    Output<<"        </DataArray>"<<"\n";
+    
+    
+    WriteInclusion("dir", ver, &Output);
+    
+    
+    
+    
+    Output<<"      </PointData>"<<"\n";
+    Output<<"      <Points>"<<"\n";
+    Output<<"        <DataArray type=\"Float32\" NumberOfComponents=\"3\" Format=\"ascii\">"<<"\n";
+    
+    
+    for (int i=0;i<numv;i++)
+    {
+        vertex* a=ver.at(i);
+        Output<<"          "<<a->GetVXPos()<<" "<<a->GetVYPos()<<" "<<a->GetVZPos()<<" "<<"\n";
+        
+        
+    }
+    Output<<"        </DataArray>"<<"\n";
+    Output<<"      </Points>"<<"\n";
+    
+    Output<<"      <Cells>"<<"\n";
+    Output<<"        <DataArray type=\"Int32\" Name=\"connectivity\" Format=\"ascii\">"<<"\n";
+    
+    
+    for (int i=0;i<numtri;i++)
+    {
+        
+        
+        triangle* a=triangle1.at(i);
+        
+        if(a->GetRepresentation()==true)
+        Output<<"           "<<(a->GetV1())->GetVID()<<" "<<(a->GetV2())->GetVID()<<" "<<(a->GetV3())->GetVID()<<" "<<"\n";
+        
+        
+    }
+    Output<<"        </DataArray>"<<"\n";
+    Output<<"        <DataArray type=\"Int32\" Name=\"offsets\" Format=\"ascii\">"<<"\n";
+    int ofset=3;
+    Output<<"          ";
+    for (int i=0;i<numtrirep;i++)
+    {
+        
+        Output<<ofset+3*i<<" ";
+        
+        
+    }
+    Output<<"\n";
+    
+    Output<<"        </DataArray>"<<"\n";
+    Output<<"        <DataArray type=\"Int32\" Name=\"types\" Format=\"ascii\">"<<"\n";
+    Output<<"          ";
+    for (int i=0;i<numtrirep;i++)
+    {
+        
+        Output<<5<<" ";
+        
+        
+    }
+    Output<<"\n";
+    
+    
+    
+    
+    
+    
+    
+    Output<<"        </DataArray>"<<"\n";
+    Output<<"      </Cells>"<<"\n";
+    Output<<"    </Piece>"<<"\n";
+    Output<<"  </UnstructuredGrid>"<<"\n";
+    Output<<"</VTKFile> "<<"\n";
+    
+    
+}

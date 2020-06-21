@@ -13,8 +13,8 @@
 #include "Topology.h"
 #include "Surface_Mosaicing.h"
 #include "VertexMove.h"
+#include "MakePBCTS.h"
 #include <cstdlib>
-
 
 
 /*
@@ -126,6 +126,11 @@ m_Zoom = 1;
       else if(edittype=="minimize" && health == true)
       {
           Minimize(file);
+          
+      }
+      else if(edittype=="add_pbc" && health == true)
+      {
+          MakePBCTS mpbc(file);
           
       }
       else if (edittype=="PLM" && health == true )
