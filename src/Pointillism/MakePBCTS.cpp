@@ -303,6 +303,7 @@ MakePBCTS::MakePBCTS(std::string file)
 
     }
     
+    
     if(m_Health==true)
     {
        // m_pEdgeLink
@@ -399,13 +400,16 @@ MakePBCTS::MakePBCTS(std::string file)
                     break;
                 }
             }
-            std::cout<<"---> note: triangles are clockwise "<<clockwise<<"  \n";
-            if(clockwise==false)
+            if(clockwise==true)
             {
                 std::cout<<"---> Warning: the triangles are clockwise. We have not tested this condition, please check your output and \n";
                 std::cout<<"---> If there was an issue contact weria.pezeshkian@gmail.com \n";
 
 
+            }
+            else
+            {
+                std::cout<<"---> note: triangles are clockwise "<<clockwise<<"  \n";
             }
             
             if(clockwise==false)
@@ -470,6 +474,7 @@ MakePBCTS::MakePBCTS(std::string file)
         
         if(VecV0X.size()<=VecV1X.size())
         {
+            
             int M = VecV1X.size();
             int DM=VecV1X.size()-VecV0X.size();
             int m=0;
@@ -502,6 +507,7 @@ MakePBCTS::MakePBCTS(std::string file)
 
             }
         }
+
         if(VecV0X.size()>VecV1X.size())
         {
             int M = VecV1X.size();
@@ -517,6 +523,7 @@ MakePBCTS::MakePBCTS(std::string file)
                 
                 if(i%R==0 && m<DM)
                 {
+
                     triangle t3(TID,VecV0X.at(i+1+m),VecV1X.at(M-i-1),VecV1X.at(M-i-2));
                     newT.push_back(t3);
                     TID++;
@@ -576,13 +583,14 @@ MakePBCTS::MakePBCTS(std::string file)
 
             }
         }
-            
+
             if(VecV1Y.size()>VecV0Y.size())
             {
                 int M = VecV0Y.size();
                 int DM=VecV1Y.size()-VecV0Y.size();
                 int m=0;
                 int R=VecV0Y.size()/(DM+1);
+                int i=0;
                 for (int i=0;i<VecV0Y.size()-1;i++)
                 {
                     
@@ -590,16 +598,18 @@ MakePBCTS::MakePBCTS(std::string file)
                     newT.push_back(t2);
                     TID++;
 
-                    if(i%R==0 && m<DM)
+                    if((i+1)%R==0 && m<DM)
                     {
-                        M=M-1;
+
+                      //  M=M-1;
                         triangle t3(TID,VecV1Y.at(i+1+m), VecV0Y.at(M-i-1),VecV0Y.at(M-i-2));
                         newT.push_back(t3);
                         TID++;
-                        m++;
                         triangle t(TID,VecV1Y.at(i+2+m),VecV1Y.at(i+1+m),VecV0Y.at(M-i-2));
                         newT.push_back(t);
                         TID++;
+                        m++;
+
                     }
                     else
                     {
@@ -612,6 +622,7 @@ MakePBCTS::MakePBCTS(std::string file)
 
         
         //V00;
+
         triangle t(TID,V11,V01,V10);
         newT.push_back(t);
         TID++;
@@ -619,8 +630,7 @@ MakePBCTS::MakePBCTS(std::string file)
         triangle t2(TID,V10,V01,V00);
         newT.push_back(t2);
         TID++;
-        
-        
+    
         
         for (std::vector<triangle>::iterator it = newT.begin() ; it != newT.end(); ++it)
         {

@@ -591,7 +591,6 @@ void WriteFiles::Writevtunew(std::vector< vertex* > ver, std::vector< triangle* 
     if(m_Box(2)<L)
     L=m_Box(2);
     L=L/2;
-    std::cout<<L<<" box here for vis \n";
 
     // First make all the triangles visualizable
     for (std::vector<triangle *>::iterator it = triangle1.begin() ; it != triangle1.end(); ++it)
