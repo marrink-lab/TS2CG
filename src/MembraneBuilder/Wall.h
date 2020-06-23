@@ -17,6 +17,7 @@ public:
 
 
     inline std::vector<bead> GetWallBead()                const  {return m_AllWallBeads;}
+    inline std::vector<point*> GetWallPoint()                const  {return m_AllWallPoints;}
 
 
 
@@ -36,6 +37,8 @@ public:
 
 private:
     std::vector<bead> m_AllWallBeads;
+    std::vector<point*> m_AllWallPoints;
+
   bool m_State;
   double m_Density;
   double m_H;

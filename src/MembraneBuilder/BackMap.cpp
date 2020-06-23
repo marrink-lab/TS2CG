@@ -8,6 +8,7 @@
 #include "ReadDTSFolder.h"
 #include "GenerateUnitCells.h"
 #include "Def.h"
+#include "PDBFile.h"
 
 /*
  
@@ -381,6 +382,14 @@ BackMap::BackMap(Argument *pArgu)
     Wall CWall = pArgu->GetWall();
     CWall.CreateWall(m_point1,m_point2);
     std::vector<bead> WB = CWall.GetWallBead();
+    std::vector<point*> WPoint = CWall.GetWallPoint();
+    
+    if(WPoint.size()>0)
+    {
+        PDBFile pdb;
+        std::string pdbfile = "wall.pdb";
+        pdb.WritePDBFile(pdbfile, WPoint);
+    }
     for (std::vector<bead>::iterator it = WB.begin() ; it != WB.end(); ++it)
     {
         m_FinalBeads.push_back((*it));

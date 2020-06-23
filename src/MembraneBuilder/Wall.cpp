@@ -106,9 +106,13 @@ void Wall::CreateWall(std::vector<point*>  p1, std::vector<point*>  p2)
             X=X+N*(m_H);
             bead  tb(id, m_BeadName, m_BeadName, "Wall", resid,X(0), X(1),X(2));
             if(prob<m_Density)
-            m_AllWallBeads.push_back(tb);
-            i++;
-            resid++;
+            {
+                m_AllWallBeads.push_back(tb);
+                m_AllWallPoints.push_back(*it);
+                i++;
+                resid++;
+            }
+
         }
         for (std::vector<point*>::iterator it = p2.begin() ; it != p2.end(); ++it)
         {
@@ -120,9 +124,14 @@ void Wall::CreateWall(std::vector<point*>  p1, std::vector<point*>  p2)
             X=X+N*(m_H);
             bead  tb(id, m_BeadName, m_BeadName, "Wall", resid,X(0), X(1),X(2));
             if(prob<m_Density)
-            m_AllWallBeads.push_back(tb);
-            i++;
-            resid++;
+            {
+                m_AllWallBeads.push_back(tb);
+                m_AllWallPoints.push_back(*it);
+                i++;
+                resid++;
+
+            }
+
 
             
         }
