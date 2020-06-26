@@ -436,7 +436,11 @@ void BackMap::GenLipid(MolType moltype, int listid, Vec3D Pos, Vec3D Normal, Vec
     //
 
     
+    
      Tensor2 LG = TransferMatLG(Normal, t1, t2);
+    
+    
+    
       std::vector<bead> vbeads = moltype.Beads;
             for ( std::vector<bead>::iterator it = vbeads.begin(); it != vbeads.end(); it++ )
             {
@@ -448,6 +452,10 @@ void BackMap::GenLipid(MolType moltype, int listid, Vec3D Pos, Vec3D Normal, Vec
             }
     
     m_ResID++;
+    
+    
+
+
 
     
 }
@@ -585,15 +593,6 @@ Tensor2 BackMap::Rz(double cos, double sin)
     
     
     return R;
-}
-Tensor2  BackMap::TransferMatLG(Vec3D Normal, Vec3D t1, Vec3D t2)
-{
-    
-    Tensor2  GL(t1,t2,Normal);
-    Tensor2 LG=GL.Transpose(GL);
-    
-    return LG;
-    
 }
 void BackMap::CreateRandomInclusion()
 {
@@ -920,7 +919,46 @@ bool BackMap::FindLipidList(std::string filename)
     
     return OK;
 }
+Tensor2  BackMap::TransferMatLG(Vec3D Normal, Vec3D t1, Vec3D t2)
+{
+    
+    
+    if(Normal.dot((t1*t2),Normal)<0)
+    t1=t1*(-1);
 
+    
+    Tensor2  GL(t1,t2,Normal);
+    Tensor2 LG=GL.Transpose(GL);
+    
+    
+    
+    
+    //======== test, ignore it
+    /* Vec3D V1(1,2,4);
+    Vec3D V2(-1,3,5);
+    
+    if(fabs((LG*(V1*V2))(0)-((LG*V1)*(LG*V2))(0))>0.01)
+    {
+    std::cout<<" Before "<<(LG*(V1*V2))(0)<<"   "<<(LG*(V1*V2))(1)<<"   "<<(LG*(V1*V2))(2)<<"   \n";
+    std::cout<<" Before "<<((LG*V1)*(LG*V2))(0)<<"   "<<((LG*V1)*(LG*V2))(1)<<"   "<<((LG*V1)*(LG*V2))(2)<<"   \n";
+
+    std::cout<<" After "<<((GL*t1))(0)<<"   "<<((GL*t1))(1)<<"   "<<((GL*t1))(2)<<"   \n";
+    
+    std::cout<<" Before "<<V1.dot(V1,V2)<<"  after dot "<<V1.dot(LG*V1,LG*V2)<<"   "<<"   \n";
+    
+    
+    std::cout<<"  "<<(t1*t2)(0)<<"   "<<(t1*t2)(1)<<"   "<<(t1*t2)(2)<<"   \n";
+    std::cout<<"  "<<(Normal)(0)<<"   "<<(Normal)(1)<<"   "<<(Normal)(2)<<"   \n";
+
+    std::cout<<" ==================  \n";
+    
+    }
+   */
+    
+    
+    return LG;
+    
+}
 
 
 

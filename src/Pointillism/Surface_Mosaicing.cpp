@@ -443,41 +443,15 @@ void Surface_Mosaicing::BestEstimateOfMidPointPossition(links *l, double *X, dou
     Vec3D Glo_geoV2=(pv2->GetL2GTransferMatrix())*Lo_geoV2;
 
 
-
     
-    
-    Tensor2 Hous;
-    Vec3D Zk;
-    Zk(2)=1.0;
-    double SignT=1;
-    
-    if((1+geodesic_dir(2))>(1-geodesic_dir(2)))
-    {
-        Zk=Zk+geodesic_dir;
-        SignT=-1;
-        
-    }
-    else if((1+geodesic_dir(2))<=(1-geodesic_dir(2)))
-    {
-        Zk=Zk-geodesic_dir;
-    }
-    
-    Zk=Zk*(1.0/Zk.norm());
-    
-    
-    Tensor2 I('I');
-    Tensor2 W=Hous.makeTen(Zk);
-    
-    Hous=(I-(W*(W.Transpose(W)))*2)*SignT;
+    Tensor2 Hous = NormalCoord(geodesic_dir);
 
     Vec3D t_2=Hous*Glo_geoV2;
     Vec3D t_1=Hous*Glo_geoV1;
 
     t_2=t_2*(1/t_2(2));
     t_1=t_1*(1/t_1(2));
- 
-    
-    
+
     t_2=t_2*(Linklenght/2.0);
     t_1=t_1*(Linklenght/2.0);
     
@@ -674,6 +648,9 @@ void Surface_Mosaicing::RoughnessOfALink(links *l, double *linklength, double *m
     
     Hous=(I-(W*(W.Transpose(W)))*2)*SignT;
     
+    
+    
+    
     Vec3D t_2=Hous*Glo_geoV2;
     Vec3D t_1=Hous*Glo_geoV1;
     
@@ -742,7 +719,39 @@ void Surface_Mosaicing::RoughnessOfALink(links *l, double *linklength, double *m
 
     
 }
-
+Tensor2 Surface_Mosaicing::NormalCoord(Vec3D N)
+{
+    
+    
+    
+    Vec3D P=N;
+    P(2) = 0;
+    P=P*(1/P.norm());
+    double cosP = P(0);
+    double sinP = P(1);
+    
+    
+    Tensor2 Rz('I');
+    Rz(0,0)=cosP;
+    Rz(1,0)=-sinP;
+    Rz(0,1)=sinP;
+    Rz(1,1)=cosP;
+    
+    Tensor2 Ry('I');
+    double cosT = N(2);
+    double sinT = -(Rz*N)(0);
+    
+    Ry(0,0) = cosT;
+    Ry(0,2) = sinT;
+    Ry(2,0) = -sinT;
+    Ry(2,2) = cosT;
+    Tensor2 M=(Ry*Rz);
+    
+    
+    
+    
+    return M;
+}
 
 
 

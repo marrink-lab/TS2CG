@@ -43,6 +43,7 @@ private:
     void UpdateGeometry();
     void MosaicOneRound();
     void BestEstimateOfMidPointPossition(links *, double *x, double *y,double *z);
+    Tensor2 NormalCoord(Vec3D N);
 
 private:
     std::vector<inclusion* > m_Inc;
