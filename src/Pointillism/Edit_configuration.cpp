@@ -3,6 +3,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <cstdlib>
+#include <cstdlib>
 #include "Curvature.h"
 #include "Edit_configuration.h"
 #include "WriteFiles.h"
@@ -14,7 +15,7 @@
 #include "Surface_Mosaicing.h"
 #include "VertexMove.h"
 #include "MakePBCTS.h"
-#include <cstdlib>
+#include "Traj_XXX.h"
 
 
 /*
@@ -348,7 +349,7 @@ void Edit_configuration::BackMapOneLayer(int layer , std::string file, double H)
     double lmax =1000;
     double mina = 0;
     Topology S(m_pBox, &mina, &lm, &lmax);
-    
+    Traj_XXX TSI(m_pBox);
 
 if(file.at(file.size()-1)=='t' && file.at(file.size()-2)=='a' && file.at(file.size()-3)=='d')
 {
@@ -388,6 +389,23 @@ else if(file.at(file.size()-1)=='q' && file.at(file.size()-2)=='.')
     m_pHalfLinks1=S.GetHalfLinks();
     m_pHalfLinks2=S.GetMHalfLinks();
     
+}
+else if(file.at(file.size()-1)=='i' && file.at(file.size()-2)=='s' && file.at(file.size()-3)=='t')
+{
+        m_pAllV.clear();
+        m_pInc.clear();
+        m_pAllT.clear();
+        m_pAllLinks.clear();
+        m_pHalfLinks1.clear();
+        m_pHalfLinks2.clear();
+        
+        TSI.ReadTSI(file);
+        m_pAllV=TSI.GetVertex();
+        m_pAllT=TSI.GetTriangle();
+        m_pAllLinks=TSI.GetLinks();
+        m_pHalfLinks1=TSI.GetHalfLinks();
+        m_pHalfLinks2=TSI.GetMHalfLinks();
+        m_pInc=TSI.GetInclusion();
 }
 else
 {
@@ -619,6 +637,7 @@ bool Edit_configuration::check(std::string file){
     double lmax =1000;
     double mina = 0;
     Topology S(m_pBox, &mina, &lm, &lmax);
+    Traj_XXX TSI(m_pBox);
     if(file.at(file.size()-1)=='t' && file.at(file.size()-2)=='a' && file.at(file.size()-3)=='d')
     {
         m_pAllV.clear();
@@ -657,6 +676,23 @@ bool Edit_configuration::check(std::string file){
         m_pHalfLinks1=S.GetHalfLinks();
         m_pHalfLinks2=S.GetMHalfLinks();
         
+    }
+    else if(file.at(file.size()-1)=='i' && file.at(file.size()-2)=='s' && file.at(file.size()-3)=='t')
+    {
+        m_pAllV.clear();
+        m_pInc.clear();
+        m_pAllT.clear();
+        m_pAllLinks.clear();
+        m_pHalfLinks1.clear();
+        m_pHalfLinks2.clear();
+        
+        TSI.ReadTSI(file);
+        m_pAllV=TSI.GetVertex();
+        m_pAllT=TSI.GetTriangle();
+        m_pAllLinks=TSI.GetLinks();
+        m_pHalfLinks1=TSI.GetHalfLinks();
+        m_pHalfLinks2=TSI.GetMHalfLinks();
+        m_pInc=TSI.GetInclusion();
     }
     else
     {
@@ -820,6 +856,7 @@ void Edit_configuration::Minimize(std::string file){
     double lmax =1000;
     double mina = 0;
     Topology S(m_pBox, &mina, &lm, &lmax);
+    Traj_XXX TSI(m_pBox);
     if(file.at(file.size()-1)=='t' && file.at(file.size()-2)=='a' && file.at(file.size()-3)=='d')
     {
         m_pAllV.clear();
@@ -857,6 +894,23 @@ void Edit_configuration::Minimize(std::string file){
         m_pHalfLinks1=S.GetHalfLinks();
         m_pHalfLinks2=S.GetMHalfLinks();
         
+    }
+    else if(file.at(file.size()-1)=='i' && file.at(file.size()-2)=='s' && file.at(file.size()-3)=='t')
+    {
+        m_pAllV.clear();
+        m_pInc.clear();
+        m_pAllT.clear();
+        m_pAllLinks.clear();
+        m_pHalfLinks1.clear();
+        m_pHalfLinks2.clear();
+        
+        TSI.ReadTSI(file);
+        m_pAllV=TSI.GetVertex();
+        m_pAllT=TSI.GetTriangle();
+        m_pAllLinks=TSI.GetLinks();
+        m_pHalfLinks1=TSI.GetHalfLinks();
+        m_pHalfLinks2=TSI.GetMHalfLinks();
+        m_pInc=TSI.GetInclusion();
     }
     else
     {

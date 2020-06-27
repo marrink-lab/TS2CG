@@ -127,6 +127,7 @@ std::string Filename=m_Filename+".gro";
             const char* B="O";
             const char* A=(((*it)->GetInclusion())->GetType()).c_str();
             int resid=((*it)->GetInclusion())->GetTypeID();
+           // std::cout<<((*it)->GetInclusion())->GetTypeID()<<"  "<<(((*it)->GetInclusion())->GetType())<<"  "<<((*it)->GetInclusion())->GetID()<<"\n";
     		fprintf(fgro, "%5d%5s%5s%5d%8.3f%8.3f%8.3f%8.4f%8.4f%8.4f\n",resid,A,B,i,x/5.0,y/5.0,z/5.0,0.0,0.0,0.0 );
 		}
                if(i>20000)
