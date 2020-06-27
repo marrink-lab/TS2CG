@@ -16,15 +16,8 @@ Curvature::Curvature(vertex * pvertex)
         Vec3D v=(*it)->GetNormalVector();
         double a=(*it)->GetArea();
         v=v*a;
-        
-             
-       
         Normal=Normal+v;
-        
-
-        
         Area+=a;
-        
     }
 
     Area=Area/3.0;
@@ -111,33 +104,7 @@ Curvature::Curvature(vertex * pvertex)
     //==== Find Curvature and local frame
     //=============
     
-    Tensor2 Hous;
-    Vec3D Zk;
-    Zk(2)=1.0;
-    double SignT=1;
-  
-    if((1+Normal(2))>(1-Normal(2)))   // 1+/-Normal(2) is always larger then 1
-    {
-        Zk=Zk+Normal;
-        SignT=-1;
-      
-    }
-    else if((1+Normal(2))<=(1-Normal(2)))
-    {
-       Zk=Zk-Normal;
-    }
-    
-    double noz=Zk.norm();
-    
-    Zk=Zk*(1.0/noz);
-   
-    Tensor2 I('I');
-    Tensor2 W=Hous.makeTen(Zk);
-    
-    Hous=(I-(W*(W.Transpose(W)))*2)*SignT;
-
-
-    
+    Tensor2 Hous = Householder(Normal);
     Tensor2 LSV;// Local SV
     LSV=(Hous.Transpose(Hous))*(SV*Hous);    // LSV is the curvature matrix in the local frame, the it is a 2*2 minor matrix since all the 3 component are zero.
 
@@ -195,54 +162,98 @@ Curvature::Curvature(vertex * pvertex)
     EigenvMat(0,1)=-EigenvMat(1,0);
     EigenvMat(1,1)=EigenvMat(0,0);
     EigenvMat(2,2)=1;
-
-    
-    
-
-        
-        
-
-        
-        
         
 
 
-//  Tensor2 TransferMatGL=EigenvMat*Hous;   /// This matrix transfers vectors from Global coordinate to local coordinate//
-//  Tensor2 TransferMatLG = TransferMatGL.Transpose(TransferMatGL);//// This matrix transfers vectors from local coordinate to global coordinate
-        
-        
-        
+        // std::cout<<(Hous*Normal)(0)<<"   "<<(Hous*Normal)(1)<<"   "<<(Hous*Normal)(2)<<"   \n";
 
+ // Tensor2 TransferMatGL=EigenvMat*Hous;   /// This matrix transfers vectors from Global coordinate to local coordinate//
+ // Tensor2 TransferMatLG = TransferMatGL.Transpose(TransferMatGL);//// This matrix transfers vectors from local coordinate to global coordinate
+        
         
         ///  this is correct, We can check by applying transpose(E)*t1 = (1,0,0)
         
      Tensor2 TransferMatLG=Hous*EigenvMat;   /// This matrix transfers vectors from local coordinate to global coordinate
-     Tensor2 TransferMatGL=TransferMatLG.Transpose(TransferMatLG);   /// This matrix transfers vectors from Global coordinate to local coordinate
-
+        
 
         
-    m_pVertex->UpdateL2GTransferMatrix(TransferMatLG);
-    m_pVertex->UpdateG2LTransferMatrix(TransferMatGL);
-
-
+     Tensor2 TransferMatGL=TransferMatLG.Transpose(TransferMatLG);   /// This matrix transfers vectors from Global coordinate to local coordinate
+        
+        m_pVertex->UpdateL2GTransferMatrix(TransferMatLG);
+        m_pVertex->UpdateG2LTransferMatrix(TransferMatGL);
+        
+        
         
         if(pvertex->VertexOwnInclusion()==true)
         {
-        inclusion * in=pvertex->GetInclusion();
-        Vec3D LD=in->GetLDirection();
-        Vec3D GD=TransferMatLG*LD;
-       // in->UpdateGlobalDirection(GD);
+            inclusion * in=pvertex->GetInclusion();
+            Vec3D LD=in->GetLDirection();
         }
         
+        
+        /*  if(2<1)
+         {
+         Vec3D P1(TransferMatLG(0,0),TransferMatLG(1,0),TransferMatLG(2,0));
+         Vec3D P2(TransferMatLG(0,1),TransferMatLG(1,1),TransferMatLG(2,1));
+         
+         if(P1.dot(P1*P2,Normal)<0)
+         {
+         TransferMatLG(0,0)=-TransferMatLG(0,0);
+         TransferMatLG(1,0)=-TransferMatLG(1,0);
+         TransferMatLG(2,0)=-TransferMatLG(2,0);
+         }
+         
+         
+         }*/
 
+//
+ #if TEST_MODE == Enabled
+      Tensor2 Before = TransferMatLG;
+        Vec3D P1(1,0,0);
+        Vec3D P2(0,1,0);
+        
+        P1=TransferMatLG*P1;
+        P2=TransferMatLG*P2;
 
+        Vec3D p1=P1;
+        if(P1.dot(P1*P2,Normal)<0)
+        P1=P1*(-1);
+        
+        Tensor2 Q(P1,P2,Normal);
+        
+        TransferMatGL = Q;
+        
+        
+        TransferMatLG = Q.Transpose(TransferMatGL);
+        
+        Tensor2 After = TransferMatLG;
 
+  
+        
+        Vec3D a1(1,0,0);
+        Vec3D a2(0,1,0);
+        Vec3D a3(0,0,1);
 
- 
+        if(P1.dot(p1*P2,Normal)<0)
+        {
+            std::cout<<((TransferMatLG*a1)*(TransferMatLG*a2))(0)<<"   "<<((TransferMatLG*a1)*(TransferMatLG*a2))(1)<<"   "<<((TransferMatLG*a1)*(TransferMatLG*a2))(2)<<"\n";
+            
+           std::cout<<(TransferMatGL*(TransferMatLG*a3))(0)<<"   "<<(TransferMatGL*(TransferMatLG*a3))(1)<<"   "<<(TransferMatGL*(TransferMatLG*a3))(2)<<"\n";
 
+            std::cout<<"=================\n";
+            std::cout<<Before(0,0)<<"   "<<Before(0,1)<<"   "<<Before(0,2)<<"\n";
+            std::cout<<Before(1,0)<<"   "<<Before(1,1)<<"   "<<Before(1,2)<<"\n";
+            std::cout<<Before(2,0)<<"   "<<Before(2,1)<<"   "<<Before(2,2)<<"\n";
+            
+            std::cout<<"====== after ===========\n";
+            std::cout<<After(0,0)<<"   "<<After(0,1)<<"   "<<After(0,2)<<"\n";
+            std::cout<<After(1,0)<<"   "<<After(1,1)<<"   "<<After(1,2)<<"\n";
+            std::cout<<After(2,0)<<"   "<<After(2,1)<<"   "<<After(2,2)<<"\n";
+            
+            std::cout<<"\n";
+            
 
-
-#if TEST_MODE == Enabled
+        }
         ///// here should be corrected  . we need a good test to see if the transformation is correct
         Vec3D localN(0,0,1);
         Vec3D GN1 = TransferMatLG*localN;
@@ -284,31 +295,61 @@ Curvature::Curvature(vertex * pvertex)
     
     c1=c1/Area;
     c2=c2/Area;
-    
-
-    
-
     m_pVertex->UpdateCurvature(c1,c2);
  
-    
-    
-    
-
-    
-    
-
 }
 
 
 Curvature::~Curvature()
 {
-    
+
 }
 
-//void Curvature::UpdateRepresentation(bool z)
-//{
-//m_Representation=z;
-//}
+Tensor2 Curvature::Householder(Vec3D N)
+{
+    
+    Tensor2 Hous;
+    Vec3D Zk;
+    Zk(2)=1.0;
+    Zk=Zk+N;
+    Zk=Zk*(1.0/Zk.norm());
+    
+    Tensor2 I('I');
+    Tensor2 W=Hous.makeTen(Zk);
+    Hous=(I-W*2)*(-1);
+    
+    return Hous;
+
+    
+
+   
+    /*
+    Zk(0) = 0;Zk(1) = 0;
+    Zk(2)=1.0;
+    double SignT=1;
+    if((1+N(2))>(1-N(2)))   // 1+/-Normal(2) is always larger then 1
+    {
+     Zk=Zk+N;
+    SignT=-1;
+     }
+    else if((1+N(2))<=(1-N(2)))
+     Zk=Zk-N;
+    Zk=Zk*(1.0/Zk.norm());
+    W=Hous.makeTen(Zk);
+    Hous=(I-W*2)*(SignT);
+    
+    
+    std::cout<<"====== old ===========\n";
+    std::cout<<Hous(0,0)<<"   "<<Hous(0,1)<<"   "<<Hous(0,2)<<"\n";
+    std::cout<<Hous(1,0)<<"   "<<Hous(1,1)<<"   "<<Hous(1,2)<<"\n";
+    std::cout<<Hous(2,0)<<"   "<<Hous(2,1)<<"   "<<Hous(2,2)<<"\n";*/
+   // double SignT=1;
+    
+
+    
+    
+    
+}
 /// normal vector update
 
 

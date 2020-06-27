@@ -722,8 +722,20 @@ void Surface_Mosaicing::RoughnessOfALink(links *l, double *linklength, double *m
 Tensor2 Surface_Mosaicing::NormalCoord(Vec3D N)
 {
     
+    Tensor2 Hous;
+    Vec3D Zk;
+    Zk(2)=1.0;
+    Zk=Zk+N;
+    Zk=Zk*(1.0/Zk.norm());
+    
+    Tensor2 I('I');
+    Tensor2 W=Hous.makeTen(Zk);
+    Hous=(I-W*2)*(-1);
+    
+    return Hous;
     
     
+  /*
     Vec3D P=N;
     P(2) = 0;
     P=P*(1/P.norm());
@@ -746,11 +758,9 @@ Tensor2 Surface_Mosaicing::NormalCoord(Vec3D N)
     Ry(2,0) = -sinT;
     Ry(2,2) = cosT;
     Tensor2 M=(Ry*Rz);
-    
-    
-    
-    
     return M;
+    
+    */
 }
 
 

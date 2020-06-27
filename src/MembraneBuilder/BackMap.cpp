@@ -923,8 +923,8 @@ Tensor2  BackMap::TransferMatLG(Vec3D Normal, Vec3D t1, Vec3D t2)
 {
     
     
-    if(Normal.dot((t1*t2),Normal)<0)
-    t1=t1*(-1);
+   // if(Normal.dot((t1*t2),Normal)<0)
+    //t2=t2*(-1);
 
     
     Tensor2  GL(t1,t2,Normal);

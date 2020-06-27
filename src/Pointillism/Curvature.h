@@ -31,6 +31,7 @@ private:
 
 
 private:
+    Tensor2 Householder(Vec3D N);
 
     
     
