@@ -13,6 +13,7 @@ point::point(int id,double area, Vec3D x,Vec3D n, Vec3D p1, Vec3D p2, std::vecto
     m_P2 = p2;
     m_C = c;
     m_ID = id;
+    m_UpperLayer = true;
 }
 
 
@@ -45,6 +46,10 @@ void point::UpdateInclusion(inclusion *pInc)
 {
     m_HasInc = true;
     m_pInc = pInc;
+}
+void point::UpdateUpperLayer(bool x)
+{
+    m_UpperLayer=x;
 }
 
 

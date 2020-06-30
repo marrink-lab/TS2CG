@@ -77,6 +77,9 @@ void PDBFile::WritePDBFile(std::string file,std::vector<point*> p1)
         const char* A2=" ";
         double meanC=(C.at(0)+C.at(1))/2.0;
         double KG=(C.at(0)*C.at(1));
+        
+        if((*it)->GetUpperLayer()==false)
+        meanC = -meanC;
 
         fprintf(fpdb, "%4s%7d%5s%1s%3s%2s%4d%3s%8.3f%8.3f%8.3f%6.2f%6.2f\n",A0,i,aname,A1,resname,chain,1,A2,X(0),X(1),X(2),meanC,KG );
 

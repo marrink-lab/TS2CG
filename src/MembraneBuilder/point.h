@@ -25,6 +25,8 @@ public:
         inline UnitCell *GetpointUnitCell()        const        {return m_PointUnitCell;}
         inline inclusion *GetInclusion()        const        {return m_pInc;}
         inline bool Hasinc()        const        {return m_HasInc;}
+        inline bool GetUpperLayer()        const        {return m_UpperLayer;}
+
 
 
 
@@ -36,12 +38,14 @@ public:
   void UpdateInclusion(inclusion *pInc);
   void UpdatepointUnitCell(UnitCell * z);
   void UpdateArea(double);
+  void UpdateUpperLayer(bool);
 
 public:
 
 
 private:
 
+    bool m_UpperLayer;
     double m_Area;
     Vec3D m_Pos;
     Vec3D m_Normal;

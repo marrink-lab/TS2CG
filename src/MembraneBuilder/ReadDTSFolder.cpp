@@ -128,6 +128,8 @@ std::vector<point> ReadDTSFolder::ReadPointObjects(std::string file, int lay)
         C.push_back(c1);
         C.push_back(c2);
         point p(id, area,X,N, P1, P2, C );
+        if(lay==-1)
+        p.UpdateUpperLayer(false);
 
         AllPoint.push_back(p);
     }
