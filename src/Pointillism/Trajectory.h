@@ -33,8 +33,8 @@ public:
 public:
 
 void Write(int step ,  std::string filename, std::vector< vertex* > pver, std::vector< triangle* > ptriangle,  std::vector< links* > plinks, std::vector< inclusion* > pinc);
-void Read(std::string filename);
-void ReadTrajectoryFile(std::string );
+void Read(std::string filename, bool);
+void ReadTrajectoryFile(std::string  );
 private:
 
 std::vector<vertex> m_Vertex;
@@ -44,6 +44,8 @@ std::vector<triangle> m_Triangle;
 int m_iniStep;
 void CopyFile(std::string, std::string);
 bool CheckFile(std::string);
+void ResizeBox();
+
 private:
 
     std::vector<vertex*>      m_pAllV;

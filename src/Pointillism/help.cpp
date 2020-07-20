@@ -46,6 +46,7 @@ help::help(std::string version,std::string exe)
         std::cout<<"  -r                    string         PLM              function(PLM/check/add_pbc) "<<"\n";
         std::cout<<"  -o                    string         point            name of the output folder "<<"\n";
         std::cout<<"  -shape                string         no               fixed geometry (flat) "<<"\n";
+        std::cout<<"  -resizebox            ------         no               find a better box for the system  "<<"\n";
         std::cout<<"  -TSfile               string         TS.q             TS file name (three file format type, *.q/*.tsi/*.dat)"<<"\n";
         std::cout<<"  -Mashno               int             1               number of Mosaicing, your point number grows as 4^Mashno  "<<"\n";
         std::cout<<"  -AlgType              string         Type1            algorithm type for Mosaicing (Type1 and Type2); no difference has been reported yet  "<<"\n";

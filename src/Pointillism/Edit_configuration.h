@@ -36,7 +36,7 @@ Vec3D *m_pBox;
     std::string m_Folder ;
     double m_AP ;
     std::string m_Shape;
-
+    bool m_FindnewBox;
    int m_Nx;
    int m_Ny;
     double m_minRoughness;

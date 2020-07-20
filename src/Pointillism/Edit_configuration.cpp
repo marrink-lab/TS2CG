@@ -47,7 +47,7 @@ std::vector <std::string> Arguments = pArgument->GetArgumentString();
     Box(0)=f.String_to_Double(pArgument->GetLx());
     Box(1)=f.String_to_Double(pArgument->GetLy());
     Box(2)=f.String_to_Double(pArgument->GetLz());
-
+    m_FindnewBox = false;
     Vec3D *pBox=&Box;
 bool health = true;
 m_pBox=pBox;
@@ -94,6 +94,11 @@ m_Zoom = 1;
         if(Arguments.at(i)=="-smooth")
         {
             m_smooth=true;
+            i=i-1;
+        }
+        if(Arguments.at(i)=="-resizebox")
+        {
+            m_FindnewBox=true;
             i=i-1;
         }
         if(Arguments.at(i)=="-monolayer")
@@ -360,7 +365,7 @@ if(file.at(file.size()-1)=='t' && file.at(file.size()-2)=='a' && file.at(file.si
     m_pHalfLinks1.clear();
     m_pHalfLinks2.clear();
 
-    TrajClass.Read(file);
+    TrajClass.Read(file,m_FindnewBox);
     m_pAllV=TrajClass.GetVertex();
     m_pAllT=TrajClass.GetTriangle();
     m_pAllLinks=TrajClass.GetLinks();
@@ -647,7 +652,7 @@ bool Edit_configuration::check(std::string file){
         m_pHalfLinks1.clear();
         m_pHalfLinks2.clear();
         
-        TrajClass.Read(file);
+        TrajClass.Read(file,m_FindnewBox);
         m_pAllV=TrajClass.GetVertex();
         m_pAllT=TrajClass.GetTriangle();
         m_pAllLinks=TrajClass.GetLinks();
@@ -865,7 +870,7 @@ void Edit_configuration::Minimize(std::string file){
         m_pAllLinks.clear();
         m_pHalfLinks1.clear();
         m_pHalfLinks2.clear();
-        TrajClass.Read(file);
+        TrajClass.Read(file,m_FindnewBox);
         m_pAllV=TrajClass.GetVertex();
         m_pAllT=TrajClass.GetTriangle();
         m_pAllLinks=TrajClass.GetLinks();

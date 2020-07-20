@@ -106,7 +106,7 @@ void Trajectory::Write(int step ,  std::string filename , std::vector< vertex* >
     
     
 }
-void Trajectory::Read(std::string filename)
+void Trajectory::Read(std::string filename, bool newbox)
 {
 
 
@@ -145,6 +145,8 @@ if(m_TrajectoryCondition==true)
 
 ReadTrajectoryFile(filename);
 
+    if(newbox==true)
+    ResizeBox();
 
 }
 else
@@ -153,6 +155,8 @@ std::string sms="the Trajectory file is broken ";
 m_f.Write_One_LogMessage(sms);
 
 }
+    
+    
 
 }
 
@@ -324,6 +328,65 @@ void Trajectory::ReadTrajectoryFile(std::string filename)
 		m_f.Write_One_ErrorMessage(sms);
 		m_TrajectoryCondition=false;
 	}
+
+
+}
+void Trajectory::ResizeBox()
+{
+    
+    
+    
+   // std::vector<vertex*>      m_pAllV;
+    
+   // m_pBox
+    
+    double xcm = 0;
+    double ycm = 0;
+    double zcm = 0;
+    for (std::vector<vertex*>::iterator it = m_pAllV.begin() ; it != m_pAllV.end(); ++it)
+    {
+        xcm+=((*it)->GetVXPos())/double(m_pAllV.size());
+        ycm+=((*it)->GetVYPos())/double(m_pAllV.size());
+        zcm+=((*it)->GetVZPos())/double(m_pAllV.size());
+
+    }
+    double xmax = 0;
+    double ymax = 0;
+    double zmax = 0;
+    
+
+        for (int i=0;i<m_pAllV.size();i++)
+        {
+            for (int j=i+1;j<m_pAllV.size();j++)
+            {
+                
+                double dx =(m_pAllV.at(i))->GetVXPos()-(m_pAllV.at(j))->GetVXPos();
+                double dy =(m_pAllV.at(i))->GetVYPos()-(m_pAllV.at(j))->GetVYPos();
+                double dz =(m_pAllV.at(i))->GetVZPos()-(m_pAllV.at(j))->GetVZPos();
+                
+                if(fabs(dx)>xmax)
+                xmax = fabs(dx);
+                if(fabs(dy)>ymax)
+                ymax = fabs(dy);
+                if(fabs(dz)>zmax)
+                zmax = fabs(dz);
+
+            }
+        }
+    (*m_pBox)(0) = 1.2*xmax;
+    (*m_pBox)(1) = 1.2*ymax;
+    (*m_pBox)(2) = 1.2*zmax;
+    
+    
+    
+    for (std::vector<vertex*>::iterator it = m_pAllV.begin() ; it != m_pAllV.end(); ++it)
+    {
+        (*it)->UpdateVXPos((*it)->GetVXPos()-xcm+(*m_pBox)(0)/2);
+        (*it)->UpdateVYPos((*it)->GetVYPos()-ycm+(*m_pBox)(1)/2);
+        (*it)->UpdateVZPos((*it)->GetVZPos()-zcm+(*m_pBox)(2)/2);
+
+        
+    }
 
 
 }
