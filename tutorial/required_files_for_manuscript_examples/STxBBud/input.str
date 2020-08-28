@@ -6,4 +6,5 @@ End
 ; proteinname typeid ratio phi theta z0
 [Protein List]
 STxB 1  1 0 0 -1.1
+STxB 2  1 0 0 -1.1
 End Protein
