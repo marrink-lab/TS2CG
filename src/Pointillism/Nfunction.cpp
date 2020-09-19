@@ -72,6 +72,7 @@ L=bool((WORD==Word_Name)||FILE_NAME.eof());
 if (FILE_NAME.eof())
 {
 std::cout<<"There is no command"<<Word_Name;
+    
 return 0;
 }
 else 

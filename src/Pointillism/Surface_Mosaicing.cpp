@@ -734,33 +734,7 @@ Tensor2 Surface_Mosaicing::NormalCoord(Vec3D N)
     
     return Hous;
     
-    
-  /*
-    Vec3D P=N;
-    P(2) = 0;
-    P=P*(1/P.norm());
-    double cosP = P(0);
-    double sinP = P(1);
-    
-    
-    Tensor2 Rz('I');
-    Rz(0,0)=cosP;
-    Rz(1,0)=-sinP;
-    Rz(0,1)=sinP;
-    Rz(1,1)=cosP;
-    
-    Tensor2 Ry('I');
-    double cosT = N(2);
-    double sinT = -(Rz*N)(0);
-    
-    Ry(0,0) = cosT;
-    Ry(0,2) = sinT;
-    Ry(2,0) = -sinT;
-    Ry(2,2) = cosT;
-    Tensor2 M=(Ry*Rz);
-    return M;
-    
-    */
+
 }
 
 
